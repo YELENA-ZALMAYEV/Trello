@@ -9,13 +9,15 @@ public class LoginTests extends ApplicationManager {
 
     UserDTO user = UserDTO.builder()
             .email("elenkina73@gmail.com")
-            .password(",3P?CY5.!FtscxU")
+            .password("qweQaz12#$%")
             .build();
 
-
     @Test
-    public  void  loginTest(){
+    public void loginTest(){
         HomePage homePage = new HomePage(getDriver());
-        homePage.clickBtnLogin();
+        homePage.clickBtnLogin()
+                .typeEmail(user)
+                .typePassword(user)
+        ;
     }
 }
