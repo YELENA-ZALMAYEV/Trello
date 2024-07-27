@@ -10,7 +10,7 @@ import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import static pages.BasePage.driver;
 import static pages.BasePage.setDriver;
 
-public class BoardsPage {
+public class BoardsPage extends  BasePage{
     public BoardsPage(WebDriver driver) {
         setDriver(driver);
         PageFactory.initElements(
@@ -37,5 +37,8 @@ public class BoardsPage {
     public BoardsPage clickBtnCreateSubmitNegative(){
         btnCreateSubmit.click();
         return this;
+    }
+    public  boolean isElementClickable_btnCreateSubmit(){
+        return  isElementClickable(btnCreateSubmit, 3);
     }
 }

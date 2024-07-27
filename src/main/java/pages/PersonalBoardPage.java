@@ -18,4 +18,7 @@ public class PersonalBoardPage extends BasePage{
     public boolean isTextInElementPresent_nameBoard(String text){
         return isTextInElementPresent(nameBoard, text, 5);
     }
+
+
+
 }
