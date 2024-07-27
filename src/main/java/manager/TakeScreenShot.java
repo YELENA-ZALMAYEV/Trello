@@ -23,13 +23,14 @@ public class TakeScreenShot {
             throw new RuntimeException(e);
         }
     }
+
     private static String createFileNameScreenShot(){
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss"); //format opredelen v class SimpleDateFormat
         Date date = new Date(System.currentTimeMillis());
         System.out.println(date);
         String currentDate = formatter.format(date);
         System.out.println(currentDate);
-        String filePath = "src/main/resources/screenshots/screnshot_"+currentDate+".png";
+        String filePath = "src/main/resources/screenshots"+currentDate+".png"; //path
         return filePath;
     }
 }
