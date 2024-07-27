@@ -15,7 +15,8 @@ public class ApplicationManager {
 
     private WebDriver driver;
     private ChromeOptions chromeOptions; //multi languishes - chromeOptions;
-  //  public Logger logger = LoggerFactory.getLogger(ApplicationManager.class);
+
+    public Logger logger = LoggerFactory.getLogger(ApplicationManager.class);
 
     public  WebDriver getDriver(){
         return driver;
