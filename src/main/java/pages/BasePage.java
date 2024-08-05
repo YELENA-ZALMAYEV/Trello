@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -14,6 +15,12 @@ public class BasePage {
     public  static  void  setDriver(WebDriver driver){
         BasePage.driver=driver;
     }
+
+//    public void hideFooter(){
+//        JavascriptExecutor js = (JavascriptExecutor) driver;
+//        js.executeScript("document.querySelector('footer').style.display='none'");
+//    }
+
 
     public  void pause(int time){
         try{
@@ -53,5 +60,10 @@ public class BasePage {
             return  false;
         }
 
+    }
+
+    public void  clickWait(WebElement element, int time){
+        new WebDriverWait(driver, Duration.ofSeconds(time))
+                .until(ExpectedConditions.elementToBeClickable(element)).click();
     }
 }

@@ -11,8 +11,8 @@ target/
 *.iws
 *.iml
 *.ipr
-
 src/main/resources/test_logs
+src/main/resources/screenshots
 
 ### Eclipse ###
 .apt_generated

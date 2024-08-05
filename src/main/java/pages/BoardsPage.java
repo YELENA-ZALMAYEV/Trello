@@ -1,15 +1,18 @@
 package pages;
 
 import dto.BoardDTO;
+import manager.TestNGListener;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.testng.annotations.Listeners;
 
 import static pages.BasePage.driver;
 import static pages.BasePage.setDriver;
 
+@Listeners(TestNGListener.class)
 public class BoardsPage extends  BasePage{
     public BoardsPage(WebDriver driver) {
         setDriver(driver);
@@ -25,8 +28,14 @@ public class BoardsPage extends  BasePage{
     WebElement btnCreateSubmit;
     @FindBy(xpath = "//span[@class='QMKgZFIITLiEJN']")
     WebElement popUpBoardDeleted;
+    @FindBy(xpath = "//button[@data-testid='header-member-menu-button']")
+    WebElement btnHeaderProfile;
+    @FindBy(xpath = "//a[@data-testid='manage-account-link']")
+    WebElement btnManageAccount;
 
     public BoardsPage typeBoardTitle(BoardDTO board){
+        pause(5);
+
         btnCreateBoard.click();
         inputBoardTitle.sendKeys(board.getBoardTitle());
         return this;
@@ -41,10 +50,15 @@ public class BoardsPage extends  BasePage{
         return this;
     }
     public  boolean isElementClickable_btnCreateSubmit(){
-        return  isElementClickable(btnCreateSubmit, 3);
+        return  isElementClickable(btnCreateSubmit, 15);
     }
 
     public boolean isTextPopUpPresent() {
-        return  isTextInElementPresent(popUpBoardDeleted, "Board deleted.", 3);
+        return  isTextInElementPresent(popUpBoardDeleted, "Board deleted.", 15);
+    }
+    public ProfileAndVisibility goToProfileAndVisibility() {
+        btnHeaderProfile.click();
+        btnManageAccount.click();
+        return new ProfileAndVisibility(driver);
     }
 }

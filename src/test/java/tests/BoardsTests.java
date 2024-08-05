@@ -3,8 +3,10 @@ package tests;
 import dto.BoardDTO;
 import dto.UserDTO;
 import manager.ApplicationManager;
+//import manager.TestNGListener;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.BoardsPage;
 import pages.HomePage;
@@ -12,6 +14,10 @@ import pages.PersonalBoardPage;
 
 import java.lang.reflect.Method;
 import java.util.Random;
+
+import static org.openqa.selenium.devtools.v119.debugger.Debugger.pause;
+
+//@Listeners(TestNGListener.class)
 
 public class BoardsTests extends ApplicationManager {
     UserDTO user = UserDTO.builder()
@@ -67,7 +73,9 @@ public class BoardsTests extends ApplicationManager {
         BoardDTO board = BoardDTO.builder()
                 .boardTitle("QA26-" + i)
                 .build();
+        pause();
         PersonalBoardPage personalBoardPage = boardsPage
+
                 .typeBoardTitle(board)
                 .clickBtnCreateSubmitPositive();
         if (personalBoardPage.isTextInElementPresent_nameBoard(board.getBoardTitle())) {
