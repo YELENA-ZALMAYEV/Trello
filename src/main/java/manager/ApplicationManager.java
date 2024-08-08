@@ -1,8 +1,10 @@
 package manager;
 
+import dto.UserDTO;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringDecorator;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.events.WebDriverListener;
@@ -13,6 +15,8 @@ import org.testng.annotations.BeforeMethod;
 
 import java.util.concurrent.TimeUnit;
 
+import static manager.PropertiesReader.getProperty;
+
 public class ApplicationManager {
     //private EventFiringDecorator driver;
     private WebDriver driver;
@@ -22,13 +26,18 @@ public class ApplicationManager {
         return driver;
     }
 
+    protected UserDTO user = UserDTO.builder()
+            .email(getProperty("login.properties", "email"))
+            .password(getProperty("login.properties", "password"))
+            .build();
+
 
     @BeforeMethod
     public void setup(){
         ChromeOptions chromeOptions = new ChromeOptions().addArguments("--lang=en");
-        driver = new ChromeDriver(chromeOptions);
+        //driver = new ChromeDriver(chromeOptions);
+        driver = new FirefoxDriver();
         //new realization WDListeners in Selenium 4
-
         WebDriverListener webDriverListener = new WDListenerNew();
         driver = new EventFiringDecorator(webDriverListener).decorate(driver);
 
@@ -44,7 +53,7 @@ public class ApplicationManager {
     }
     @AfterMethod
     public void tearDown(){
-//        if(driver!=null)
-//            driver.quit();
+        if(driver!=null)
+            driver.quit();
     }
 }

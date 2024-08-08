@@ -11,10 +11,7 @@ import pages.HomePage;
 import pages.ProfileAndVisibility;
 
 public class ProfileTests extends ApplicationManager {
-    UserDTO user = UserDTO.builder()
-            .email("elenkina73@gmail.com")
-            .password("qweQaz12#$%")
-            .build();
+
     ProfileAndVisibility profileAndVisibility;
 
     @BeforeMethod
@@ -26,13 +23,13 @@ public class ProfileTests extends ApplicationManager {
                 .goToProfileAndVisibility();
     }
 
-    @Test (retryAnalyzer = RetryAnalyzer.class)
+    @Test(retryAnalyzer = RetryAnalyzer.class)
     public void changeProfilePhotoPositiveTest(){
         Assert.assertTrue(profileAndVisibility
                 .changeAvatar("qa_blue.jpg")
                 .isTextInElementPresent_AvatarAdded());
     }
-    @Test
+    @Test(invocationCount = 1)
     public void changeProfilePhotoNegativeTest_wrongFileFormat(){
         Assert.assertTrue(profileAndVisibility
                 .changeAvatar("log-20240731T190803.log")

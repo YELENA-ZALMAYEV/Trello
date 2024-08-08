@@ -1,10 +1,14 @@
 package tests;
 
+import dataproviders.DataProviderBoards;
 import dto.BoardDTO;
 import dto.UserDTO;
 import manager.ApplicationManager;
-//import manager.TestNGListener;
+import manager.TestNGListener;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -13,17 +17,15 @@ import pages.HomePage;
 import pages.PersonalBoardPage;
 
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Random;
 
-import static org.openqa.selenium.devtools.v119.debugger.Debugger.pause;
+import static pages.BoardsPage.pause;
 
-//@Listeners(TestNGListener.class)
+@Listeners(TestNGListener.class)
 
 public class BoardsTests extends ApplicationManager {
-    UserDTO user = UserDTO.builder()
-            .email("elenkina73@gmail.com")
-            .password("qweQaz12#$%")
-            .build();
+
     BoardsPage boardsPage = new BoardsPage(getDriver());
 
     @BeforeMethod
@@ -34,13 +36,13 @@ public class BoardsTests extends ApplicationManager {
                 .typePassword(user);
     }
 
-    @Test
+    @Test(invocationCount = 2)
     public void createBoardPositive(Method method) {
         int i = new Random().nextInt(1000);
         BoardDTO board = BoardDTO.builder()
                 .boardTitle("QA26-" + i)
                 .build();
-        logger.info(method.getName()+ "starts with board title --> "+ board.getBoardTitle());
+        logger.info(method.getName() + "starts with board title --> " + board.getBoardTitle());
         //HomePage homePage = new HomePage(getDriver());
         Assert.assertTrue(
                 //homePage.clickBtnLogin()
@@ -67,15 +69,13 @@ public class BoardsTests extends ApplicationManager {
         ;
     }
 
-    @Test
-    public void deleteBoardPositiveTest() {
-        int i = new Random().nextInt(1000);
-        BoardDTO board = BoardDTO.builder()
-                .boardTitle("QA26-" + i)
-                .build();
-        pause();
+    @Test(dataProvider = "DPFile_deleteBoardPositiveTest", dataProviderClass = DataProviderBoards.class)
+    public void deleteBoardPositiveTest(BoardDTO board) {
+//        int i = new Random().nextInt(1000);
+//        BoardDTO board = BoardDTO.builder()
+//                .boardTitle("QA26-" + i)
+//                .build();
         PersonalBoardPage personalBoardPage = boardsPage
-
                 .typeBoardTitle(board)
                 .clickBtnCreateSubmitPositive();
         if (personalBoardPage.isTextInElementPresent_nameBoard(board.getBoardTitle())) {
@@ -84,5 +84,18 @@ public class BoardsTests extends ApplicationManager {
         } else {
             Assert.fail("board isn't create");
         }
+    }
+
+    @Test
+    public void deleteAllBoard() {
+        pause(3);
+        List<WebElement> listBoars = getDriver().findElements(
+                By.xpath("//li[@class='boards-page-board-section-list-item']"));
+        System.out.println("size list --> " + listBoars.size());
+        for (int i = 0; i < listBoars.size()-2; i++) {
+            boardsPage.clickElement2ListBoards().deleteBoard(BoardDTO.builder().build());
+            pause(5);
+        }
+
     }
 }
