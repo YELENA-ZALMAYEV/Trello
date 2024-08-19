@@ -35,8 +35,8 @@ public class ApplicationManager {
     @BeforeMethod
     public void setup(){
         ChromeOptions chromeOptions = new ChromeOptions().addArguments("--lang=en");
-        //driver = new ChromeDriver(chromeOptions);
-        driver = new FirefoxDriver();
+        driver = new ChromeDriver(chromeOptions);
+       // driver = new FirefoxDriver();
         //new realization WDListeners in Selenium 4
         WebDriverListener webDriverListener = new WDListenerNew();
         driver = new EventFiringDecorator(webDriverListener).decorate(driver);

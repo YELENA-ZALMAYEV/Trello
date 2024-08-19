@@ -43,8 +43,6 @@ public class ProfileAndVisibility extends BasePage implements Path {
         File file = new File(PHOTOS_PATH+fileName);
         String filePath = file.getAbsolutePath();
         inputUploadPhoto.sendKeys(filePath);
-//        pause(3);
-//        btnUpload.click();
         clickWait(btnUpload, 10);
         return this;
     }
