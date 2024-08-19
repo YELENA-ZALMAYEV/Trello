@@ -17,6 +17,8 @@ import java.util.concurrent.TimeUnit;
 
 import static manager.PropertiesReader.getProperty;
 
+//https://github.com/AlexAksioma/QA_26_Trello/tree/master/src
+
 public class ApplicationManager {
     //private EventFiringDecorator driver;
     private WebDriver driver;
